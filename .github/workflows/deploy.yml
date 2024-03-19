@@ -1,10 +1,10 @@
 
-name: iOS App Deployment
+name: iOS App Deployment app
 
 on:
   push:
     paths:
-      - .github/workflows/iOS_build.yml
+      - .github/workflows/deploy.yml
 
 jobs:
   build:
