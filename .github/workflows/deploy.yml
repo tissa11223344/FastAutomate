@@ -3,21 +3,21 @@ name: iOS App Deployment
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - .github/workflows/iOS_build.yml
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Xcode
-        uses: actions/setup-xcode@v2
-        with:
-          xcode-version: '13.2'
+#      - name: Setup Xcode
+#        uses: actions/setup-xcode@v2
+#        with:
+#          xcode-version: '13.2'
 
       - name: Install CocoaPods Dependencies
         run: |
