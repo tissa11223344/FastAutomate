@@ -1,0 +1,6 @@
+framework module Pods_FastAutomate {
+  umbrella header "Pods-FastAutomate-umbrella.h"
+
+  export *
+  module * { export * }
+}

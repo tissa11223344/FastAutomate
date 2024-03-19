@@ -1,0 +1,43 @@
+
+name: iOS App Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Xcode
+        uses: actions/setup-xcode@v2
+        with:
+          xcode-version: '13.2'
+
+      - name: Install CocoaPods Dependencies
+        run: |
+          sudo gem install cocoapods
+          pod install
+
+      - name: Build and Archive
+        run: xcodebuild -workspace FastAutomate.xcworkspace -scheme FastAutomate -configuration Release archive -archivePath $HOME/FastAutomate.xcarchive
+
+      - name: Deploy to TestFlight
+        run: fastlane beta
+        env:
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+
+      - name: Generate TestFlight Link
+        run: fastlane generate_testflight_link
+        env:
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+
+      - name: Share TestFlight Link
+        run: fastlane share_testflight_link
+        env:
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
