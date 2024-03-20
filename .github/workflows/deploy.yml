@@ -1,5 +1,5 @@
 
-name: iOS App Deployment app
+name: iOS App Deployment
 
 on:
   push:
